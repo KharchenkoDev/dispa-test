@@ -1,0 +1,10 @@
+services:
+  php-fpm:
+    build:
+      target: prod
+    environment:
+      APP_ENV: prod
+      APP_DEBUG: "0"
+
+  mysql:
+    ports: !reset []
