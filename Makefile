@@ -50,7 +50,7 @@ env: ## Copy .env files from examples if not present
 	@test -f .env     || (cp .env.example .env         && echo "Создан .env (infrastructure)")
 	@test -f app/.env || (cp app/.env.example app/.env && echo "Создан app/.env (application)")
 
-init: env down build install up ## Build / rebuild application
+init: env down build install up migrate ## Build / rebuild application
 
 ## —— Composer 🧙 ——————————————————————————————————————————————————————————————
 composer: ## Run composer, pass the parameter "c=" to run a given command, example: make composer c='req symfony/orm-pack'
@@ -71,3 +71,6 @@ sf: ## List all Symfony commands or pass the parameter "c=" to run a given comma
 
 cc: c=c:c ## Clear the cache
 cc: sf
+
+migrate: ## Run database migrations
+	@$(SYMFONY) doctrine:migrations:migrate --no-interaction
