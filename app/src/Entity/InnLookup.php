@@ -27,9 +27,6 @@ class InnLookup
     #[ORM\Column(length: 20)]
     private string $okved;
 
-    #[ORM\Column(length: 512)]
-    private string $okvedName;
-
     #[ORM\Column(type: Types::JSON)]
     private array $rawResponse = [];
 
@@ -88,18 +85,6 @@ class InnLookup
     public function setOkved(string $okved): static
     {
         $this->okved = $okved;
-
-        return $this;
-    }
-
-    public function getOkvedName(): string
-    {
-        return $this->okvedName;
-    }
-
-    public function setOkvedName(string $okvedName): static
-    {
-        $this->okvedName = $okvedName;
 
         return $this;
     }

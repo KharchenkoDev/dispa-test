@@ -138,7 +138,6 @@
                     <th>Организация</th>
                     <th>Статус</th>
                     <th>ОКВЭД</th>
-                    <th>Вид деятельности</th>
                     <th>Дата запроса</th>
                 </tr>
             </thead>
@@ -155,7 +154,6 @@
                         {% endif %}
                     </td>
                     <td><span class="okved-code">{{ item.okved ?: '—' }}</span></td>
-                    <td>{{ item.okvedName ?: '—' }}</td>
                     <td>{{ item.createdAt|date('d.m.Y H:i') }}</td>
                 </tr>
                 {% endfor %}

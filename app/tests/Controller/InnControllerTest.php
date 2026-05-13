@@ -87,13 +87,12 @@ class InnControllerTest extends WebTestCase
         // Создаём запись с устаревшим updated_at (2 часа назад)
         $staleTime = new \DateTimeImmutable('-2 hours');
         $this->em->getConnection()->executeStatement(
-            'INSERT INTO inn_lookups (inn, name, is_active, okved, okved_name, raw_response, created_at, updated_at)
-             VALUES (:inn, :name, 1, :okved, :okved_name, :raw, :created, :updated)',
+            'INSERT INTO inn_lookups (inn, name, is_active, okved, raw_response, created_at, updated_at)
+             VALUES (:inn, :name, 1, :okved, :raw, :created, :updated)',
             [
                 'inn' => '7707083893',
                 'name' => 'Старое название',
                 'okved' => '64.19',
-                'okved_name' => 'Старой деятельности',
                 'raw' => '{}',
                 'created' => $staleTime->format('Y-m-d H:i:s'),
                 'updated' => $staleTime->format('Y-m-d H:i:s'),
@@ -150,7 +149,7 @@ class InnControllerTest extends WebTestCase
             'data' => [
                 'name' => ['short_with_opf' => 'ООО Тест'],
                 'state' => [], // нет поля status
-                // нет okved, okved_name
+                // нет okved
             ],
         ]);
         static::getContainer()->set(DadataService::class, $mock);
@@ -175,7 +174,6 @@ class InnControllerTest extends WebTestCase
                 ],
                 'state' => ['status' => 'ACTIVE'],
                 'okved' => '64.19',
-                'okved_name' => 'Деятельность по предоставлению прочих видов кредита',
             ],
         ];
     }

@@ -74,7 +74,6 @@ class InnController extends AbstractController
             ->setName($data['name']['short_with_opf'] ?? $data['name']['full_with_opf'] ?? $suggestion['value'] ?? '')
             ->setIsActive('ACTIVE' === $status)
             ->setOkved($data['okved'] ?? '')
-            ->setOkvedName($data['okved_name'] ?? '')
             ->setRawResponse($data)
             ->setUpdatedAt(new \DateTimeImmutable());
     }
@@ -86,7 +85,6 @@ class InnController extends AbstractController
             'name' => $lookup->getName(),
             'is_active' => $lookup->isActive(),
             'okved' => $lookup->getOkved(),
-            'okved_name' => $lookup->getOkvedName(),
         ];
     }
 }
