@@ -36,6 +36,9 @@ class InnLookup
     #[ORM\Column]
     private \DateTimeImmutable $createdAt;
 
+    #[ORM\Column]
+    private \DateTimeImmutable $updatedAt;
+
     public function getId(): int
     {
         return $this->id;
@@ -116,5 +119,21 @@ class InnLookup
     {
         $this->createdAt = $createdAt;
         return $this;
+    }
+
+    public function getUpdatedAt(): \DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    public function isStale(int $ttlSeconds = 3600): bool
+    {
+        return $this->updatedAt < new \DateTimeImmutable("-{$ttlSeconds} seconds");
     }
 }
