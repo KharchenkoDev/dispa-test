@@ -15,16 +15,16 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(Request $request, InnLookupRepository $repository): Response
     {
-        $page  = max(1, $request->query->getInt('page', 1));
+        $page = max(1, $request->query->getInt('page', 1));
         $total = $repository->countAll();
         $pages = (int) ceil($total / self::PER_PAGE);
-        $page  = min($page, max(1, $pages));
+        $page = min($page, max(1, $pages));
 
         return $this->render('home/index.html.twig', [
-            'items'   => $repository->findPaginated($page, self::PER_PAGE),
-            'page'    => $page,
-            'pages'   => $pages,
-            'total'   => $total,
+            'items' => $repository->findPaginated($page, self::PER_PAGE),
+            'page' => $page,
+            'pages' => $pages,
+            'total' => $total,
         ]);
     }
 }

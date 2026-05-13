@@ -29,7 +29,7 @@ class InnController extends AbstractController
 
         $lookup = $repository->findOneBy(['inn' => $inn]);
 
-        if ($lookup !== null && !$lookup->isStale()) {
+        if (null !== $lookup && !$lookup->isStale()) {
             return $this->json($this->serialize($lookup));
         }
 
@@ -43,8 +43,8 @@ class InnController extends AbstractController
             return $this->json(['error' => 'ИНН не найден.'], 404);
         }
 
-        if ($lookup === null) {
-            $lookup = (new InnLookup())->setInn($inn)->setCreatedAt(new \DateTimeImmutable());
+        if (null === $lookup) {
+            $lookup = new InnLookup()->setInn($inn)->setCreatedAt(new \DateTimeImmutable());
         }
 
         $this->hydrate($lookup, $suggestion);
@@ -55,9 +55,9 @@ class InnController extends AbstractController
         } catch (UniqueConstraintViolationException) {
             // Параллельный запрос успел сохранить первым — сбрасываем EM и читаем свежую запись
             $freshEm = $registry->resetManager();
-            $lookup  = $freshEm->getRepository(InnLookup::class)->findOneBy(['inn' => $inn]);
+            $lookup = $freshEm->getRepository(InnLookup::class)->findOneBy(['inn' => $inn]);
 
-            if ($lookup === null) {
+            if (null === $lookup) {
                 return $this->json(['error' => 'Не удалось получить данные после конкурентного сохранения.'], 500);
             }
         }
@@ -67,12 +67,12 @@ class InnController extends AbstractController
 
     private function hydrate(InnLookup $lookup, array $suggestion): void
     {
-        $data   = $suggestion['data'] ?? [];
+        $data = $suggestion['data'] ?? [];
         $status = $data['state']['status'] ?? null;
 
         $lookup
             ->setName($data['name']['short_with_opf'] ?? $data['name']['full_with_opf'] ?? $suggestion['value'] ?? '')
-            ->setIsActive($status === 'ACTIVE')
+            ->setIsActive('ACTIVE' === $status)
             ->setOkved($data['okved'] ?? '')
             ->setOkvedName($data['okved_name'] ?? '')
             ->setRawResponse($data)
@@ -82,10 +82,10 @@ class InnController extends AbstractController
     private function serialize(InnLookup $lookup): array
     {
         return [
-            'inn'        => $lookup->getInn(),
-            'name'       => $lookup->getName(),
-            'is_active'  => $lookup->isActive(),
-            'okved'      => $lookup->getOkved(),
+            'inn' => $lookup->getInn(),
+            'name' => $lookup->getName(),
+            'is_active' => $lookup->isActive(),
+            'okved' => $lookup->getOkved(),
             'okved_name' => $lookup->getOkvedName(),
         ];
     }

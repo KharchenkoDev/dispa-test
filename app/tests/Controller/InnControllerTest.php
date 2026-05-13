@@ -15,7 +15,7 @@ class InnControllerTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
-        $this->em     = static::getContainer()->get(EntityManagerInterface::class);
+        $this->em = static::getContainer()->get(EntityManagerInterface::class);
 
         $this->em->getConnection()->executeStatement('DELETE FROM inn_lookups');
     }
@@ -90,13 +90,13 @@ class InnControllerTest extends WebTestCase
             'INSERT INTO inn_lookups (inn, name, is_active, okved, okved_name, raw_response, created_at, updated_at)
              VALUES (:inn, :name, 1, :okved, :okved_name, :raw, :created, :updated)',
             [
-                'inn'       => '7707083893',
-                'name'      => 'Старое название',
-                'okved'     => '64.19',
-                'okved_name'=> 'Старой деятельности',
-                'raw'       => '{}',
-                'created'   => $staleTime->format('Y-m-d H:i:s'),
-                'updated'   => $staleTime->format('Y-m-d H:i:s'),
+                'inn' => '7707083893',
+                'name' => 'Старое название',
+                'okved' => '64.19',
+                'okved_name' => 'Старой деятельности',
+                'raw' => '{}',
+                'created' => $staleTime->format('Y-m-d H:i:s'),
+                'updated' => $staleTime->format('Y-m-d H:i:s'),
             ]
         );
 
@@ -147,8 +147,8 @@ class InnControllerTest extends WebTestCase
         $mock = $this->createMock(DadataService::class);
         $mock->expects(self::once())->method('findByInn')->willReturn([
             'value' => 'ООО Тест',
-            'data'  => [
-                'name'  => ['short_with_opf' => 'ООО Тест'],
+            'data' => [
+                'name' => ['short_with_opf' => 'ООО Тест'],
                 'state' => [], // нет поля status
                 // нет okved, okved_name
             ],
@@ -168,13 +168,13 @@ class InnControllerTest extends WebTestCase
     {
         return [
             'value' => 'ПАО СБЕРБАНК',
-            'data'  => [
-                'name'       => [
+            'data' => [
+                'name' => [
                     'short_with_opf' => 'ПАО Сбербанк',
-                    'full_with_opf'  => 'ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО «СБЕРБАНК РОССИЯ»',
+                    'full_with_opf' => 'ПУБЛИЧНОЕ АКЦИОНЕРНОЕ ОБЩЕСТВО «СБЕРБАНК РОССИЯ»',
                 ],
-                'state'      => ['status' => 'ACTIVE'],
-                'okved'      => '64.19',
+                'state' => ['status' => 'ACTIVE'],
+                'okved' => '64.19',
                 'okved_name' => 'Деятельность по предоставлению прочих видов кредита',
             ],
         ];

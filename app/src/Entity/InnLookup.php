@@ -52,6 +52,7 @@ class InnLookup
     public function setInn(string $inn): static
     {
         $this->inn = $inn;
+
         return $this;
     }
 
@@ -63,6 +64,7 @@ class InnLookup
     public function setName(string $name): static
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -74,6 +76,7 @@ class InnLookup
     public function setIsActive(bool $isActive): static
     {
         $this->isActive = $isActive;
+
         return $this;
     }
 
@@ -85,6 +88,7 @@ class InnLookup
     public function setOkved(string $okved): static
     {
         $this->okved = $okved;
+
         return $this;
     }
 
@@ -96,6 +100,7 @@ class InnLookup
     public function setOkvedName(string $okvedName): static
     {
         $this->okvedName = $okvedName;
+
         return $this;
     }
 
@@ -107,6 +112,7 @@ class InnLookup
     public function setRawResponse(array $rawResponse): static
     {
         $this->rawResponse = $rawResponse;
+
         return $this;
     }
 
@@ -118,6 +124,7 @@ class InnLookup
     public function setCreatedAt(\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
+
         return $this;
     }
 
@@ -129,6 +136,7 @@ class InnLookup
     public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
+
         return $this;
     }
 

@@ -75,6 +75,13 @@ cc: sf
 migrate: ## Run database migrations
 	@$(SYMFONY) doctrine:migrations:migrate --no-interaction
 
+## —— Code style 🎨 ——————————————————————————————————————————————————————————————
+cs-fix: ## Fix code style with PHP CS Fixer
+	@$(PHP) vendor/bin/php-cs-fixer fix
+
+cs-check: ## Check code style without making changes (dry-run)
+	@$(PHP) vendor/bin/php-cs-fixer fix --dry-run --diff
+
 ## —— Tests 🧪 ————————————————————————————————————————————————————————————————
 test-prepare: ## Create test database and run migrations
 	@$(SYMFONY) doctrine:database:create --env=test --if-not-exists

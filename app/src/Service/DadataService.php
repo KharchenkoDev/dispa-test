@@ -16,7 +16,8 @@ class DadataService
         private readonly HttpClientInterface $httpClient,
         #[Autowire(env: 'DADATA_TOKEN')]
         private readonly string $apiToken,
-    ) {}
+    ) {
+    }
 
     public function findByInn(string $inn): array
     {
@@ -24,8 +25,8 @@ class DadataService
             $response = $this->httpClient->request('POST', self::FIND_BY_ID_URL, [
                 'timeout' => self::TIMEOUT_SECONDS,
                 'headers' => [
-                    'Content-Type'  => 'application/json',
-                    'Accept'        => 'application/json',
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
                     'Authorization' => "Token {$this->apiToken}",
                 ],
                 'json' => ['query' => $inn],
@@ -33,16 +34,15 @@ class DadataService
 
             $statusCode = $response->getStatusCode();
 
-            if ($statusCode === 401) {
+            if (401 === $statusCode) {
                 throw new \RuntimeException('Ошибка авторизации DaData: проверьте DADATA_TOKEN.', 401);
             }
 
-            if ($statusCode !== 200) {
+            if (200 !== $statusCode) {
                 throw new \RuntimeException("DaData вернул неожиданный статус: {$statusCode}.", 502);
             }
 
             return $response->toArray()['suggestions'][0] ?? [];
-
         } catch (TransportExceptionInterface $e) {
             throw new \RuntimeException('Сеть DaData недоступна или истёк таймаут.', 504, $e);
         } catch (DecodingExceptionInterface $e) {
