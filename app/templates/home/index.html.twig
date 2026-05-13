@@ -125,11 +125,11 @@
 
 {% block body %}
 <h1>Проверка ИНН</h1>
-<p class="subtitle">Всего записей: {{ total }}</p>
+<p class="subtitle">Всего записей: {{ total }}. Для запроса используйте <code>/api/inn/{inn}</code>.</p>
 
 <div class="card">
     {% if items is empty %}
-        <div class="empty">Нет данных. Выполните запрос к <code>/api/inn/{inn}</code>.</div>
+        <div class="empty">Нет данных.</div>
     {% else %}
         <table>
             <thead>

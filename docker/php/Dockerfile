@@ -25,4 +25,6 @@ RUN apk add --no-cache --virtual .build-deps $PHPIZE_DEPS linux-headers \
 # --- Prod Stage ---
 FROM base AS prod
 COPY ./app .
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --no-dev --optimize-autoloader \
+    && mkdir -p var/cache var/log \
+    && chown -R www-data:www-data var/
