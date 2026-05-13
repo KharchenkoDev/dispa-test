@@ -74,3 +74,11 @@ cc: sf
 
 migrate: ## Run database migrations
 	@$(SYMFONY) doctrine:migrations:migrate --no-interaction
+
+## —— Tests 🧪 ————————————————————————————————————————————————————————————————
+test-prepare: ## Create test database and run migrations
+	@$(SYMFONY) doctrine:database:create --env=test --if-not-exists
+	@$(SYMFONY) doctrine:migrations:migrate --env=test --no-interaction
+
+test: test-prepare ## Run PHPUnit tests
+	@$(PHP) bin/phpunit
